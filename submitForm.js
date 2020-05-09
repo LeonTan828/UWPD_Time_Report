@@ -1,5 +1,9 @@
 const puppeteer = require('puppeteer');
 
+const name = 'Naomi Speiss';
+const title = 'IAM Service Coordinator';
+const email = 'asdf@mail';
+
 (async () => {
   const browser = await puppeteer.launch({ headless: false });
   const page = await browser.newPage();
@@ -13,15 +17,28 @@ const puppeteer = require('puppeteer');
   await page.click('div[id=react-select-2-option-10]');
 
   await page.click('div[id=E5EX6Xe]');
-  await page.click('div[id=react-select-3-option-2]');
+  await page.click('div[id=react-select-3-option-1]');
 
   await page.click('input[name=EMAIL_RECEIPT_CHECKBOX]');
   await page.$eval(
     'input[name=EMAIL_RECEIPT]',
-    (el) => (el.value = 'test@email.com')
+    (el, email) => (el.value = email),
+    email
   );
 
-  await page.$eval('input[name=Kka8Wbd]', (el) => (el.value = 'Alpha Test'));
+  await page.$eval('[name="Kka8Wbd"]', (el, name) => (el.value = name), name);
+  await page.$eval(
+    '[name="8OXLYgM"]',
+    (el, title) => (el.value = title),
+    title
+  );
+
+  const date = '03/04/2020';
+  await page.$eval(
+    '[name="Date Worked"]',
+    (el, date) => (el.value = date),
+    date
+  );
 
   console.log('got here');
   await browser.waitForTarget(() => false);
