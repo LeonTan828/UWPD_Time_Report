@@ -1,6 +1,6 @@
 # UWPD_Time_Report
 
-UWPD has requested UW employees to enter their Covid-19 time report through this [form](https://app.smartsheet.com/b/form/5784f92c46a14794abc5eb68c420ba7e). This script is to automate the form entry through a csv file, as many people has multiple entries to enter.
+UWPD has requested UW employees to enter their Covid-19 time report through this [form](https://app.smartsheet.com/b/form/5784f92c46a14794abc5eb68c420ba7e). This script is to automate the form entry through a csv file, as many people has multiple entries to enter. This script is a command-line program
 
 ## Getting Started
 
@@ -20,4 +20,24 @@ You will also need csv-parse. To install, run:
 
 ```
 npm i csv-parser
+```
+
+### Preparing the CSV file
+
+Fill in the Time Reporting Template.xlsx with the entry you want to submit. Please make sure to follow the instructions given on the excel sheet as to ensure that the script will run properly
+
+Once you have filled up the excel sheet. Save the file as .csv. We also recommend checking the csv file to make sure that the csv file is properly made. Please refer to CSV_sample.csv to see how the csv file should look like
+
+## Running the script
+
+To run the script, go to terminal and run:
+
+```
+node submitForm.js [filename] 'name' 'job title' email
+```
+
+An example would be
+
+```
+node submitForm.js sample_John_doe.csv 'John Doe' 'Developer' jdoe@email.com
 ```
