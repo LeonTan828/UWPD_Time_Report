@@ -26,7 +26,7 @@ npm i csv-parser
 
 Fill in the Time Reporting Template.xlsx with the entries you want to submit. Please make sure to follow the instructions given on the excel sheet as to ensure that the script will run properly
 
-Once you have filled up the excel sheet. Save the file as .csv. We also recommend checking the csv file to make sure that the csv file is properly made. Please refer to [this link](https://raw.githubusercontent.com/LeonTan828/UWPD_Time_Report/master/CSV_sample.csv) to see how the csv file should look like
+Once you have filled up the excel sheet. Save the file as .csv. We also recommend checking the csv file to make sure that the csv file is properly made. Please refer to [CSV_sample.csv](https://raw.githubusercontent.com/LeonTan828/UWPD_Time_Report/master/CSV_sample.csv) to see how the csv file should look like
 
 ## Running the script
 
