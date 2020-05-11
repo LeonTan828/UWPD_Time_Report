@@ -234,7 +234,7 @@ const mainFunc = async () => {
   let length = date.length;
   console.log('Starting entry loop');
   for (let i = 0; i < length; i++) {
-    console.log('Entry ' + (i + 1));
+    console.log('Entry ' + (i + 1) + ' out of ' + length);
     completed = false;
 
     await entryFunc(
