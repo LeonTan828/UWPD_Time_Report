@@ -48,6 +48,6 @@ node submitForm.js sample_John_doe.csv 'John Doe' 'Developer' jdoe@email.com
 - The form will block submissions if it detects automated entries. To counter that, a 3 second timer is added between each input. Hence, it is normal for the script to appear to be working slowly.
 - If you choose to have a copy of your response sent to your email, it will ask for a CAPTCHA response.
 
-  The headless option is turned off so that user can repond to the CAPTCHA. You will have 2 minutes to respond to the CAPTCHA before the script times out and move on to the next submission
+The headless option is turned off so that user can repond to the CAPTCHA. You will have 2 minutes to respond to the CAPTCHA before the script times out and move on to the next submission
 
-  However, if you have a lot of submissions to enter, we recommend choosing not to request a copy of your responses (ie. not entering your email on the command line) as it can take a long time to go answer the CAPTCHA
+However, if you have a lot of submissions to enter, we recommend choosing not to request a copy of your responses (ie. not entering your email on the command line) as it can take a long time to go answer the CAPTCHA
