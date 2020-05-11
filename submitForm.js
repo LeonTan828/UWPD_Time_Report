@@ -98,19 +98,23 @@ const entryFunc = (newdate, loc, reghr, soh, othr, rtot, note) => {
       // Name
       await page.focus('[name="Kka8Wbd"]');
       await page.keyboard.type(name);
+      await page.waitFor(3000);
 
       // Job Title
       await page.focus('[name="8OXLYgM"]');
       await page.keyboard.type(title);
+      await page.waitFor(3000);
 
       // Organization
       // ATTN: Set to DoIT
       await page.click('[data-client-id="container_Organization"]');
       await page.click('[id="react-select-2-option-10"]');
+      await page.waitFor(3000);
 
       // Date Worked
       await page.focus('[name="Date Worked"]');
       await page.keyboard.type(newdate);
+      await page.waitFor(3000);
 
       // Location of work
       await page.click('[data-client-id="container_Location of Work"]');
@@ -132,10 +136,12 @@ const entryFunc = (newdate, loc, reghr, soh, othr, rtot, note) => {
         resolve('not done');
         return;
       }
+      await page.waitFor(3000);
 
       // Number of regular hours
       await page.focus('[name="jLOv2z0"]');
       await page.keyboard.type(reghr);
+      await page.waitFor(3000);
 
       // Salaried or Hourly
       await page.click('[data-client-id="container_Salaried or Hourly"]');
@@ -155,10 +161,12 @@ const entryFunc = (newdate, loc, reghr, soh, othr, rtot, note) => {
         resolve('not done');
         return;
       }
+      await page.waitFor(3000);
 
       // Number of Overtime Hours
       await page.focus('[name="lLev2w0"]');
       await page.keyboard.type(othr);
+      await page.waitFor(3000);
 
       // Rate of Overtime
       await page.click('[data-client-id="container_Rate of Overtime"]');
@@ -184,17 +192,21 @@ const entryFunc = (newdate, loc, reghr, soh, othr, rtot, note) => {
         resolve('not done');
         return;
       }
+      await page.waitFor(3000);
 
       // Notes
       await page.focus('[name="arXqkjK"]');
       await page.keyboard.type(note);
+      await page.waitFor(3000);
 
       // Submit a copy of response
       if (email != '') {
         await page.click('[name="EMAIL_RECEIPT_CHECKBOX"]');
+        await page.waitFor(3000);
         await page.focus('[name="EMAIL_RECEIPT"]');
         await page.keyboard.type(email);
       }
+      await page.waitFor(3000);
 
       // Clicking submit button
       await page.click('[data-client-id="form_submit_btn"]');
@@ -206,6 +218,7 @@ const entryFunc = (newdate, loc, reghr, soh, othr, rtot, note) => {
       } catch (err) {
         console.error('timed out');
       }
+      await page.waitFor(3000);
 
       await browser.close();
       resolve('done here');
