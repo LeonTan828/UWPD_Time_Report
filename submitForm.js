@@ -200,7 +200,7 @@ const entryFunc = (newdate, loc, reghr, soh, othr, rtot, note) => {
       await page.click('[data-client-id="form_submit_btn"]');
       try {
         await page.waitFor('[data-client-id="confirmation_msg"]', {
-          timeout: 60000
+          timeout: 120000
         });
         completed = true;
       } catch (err) {
