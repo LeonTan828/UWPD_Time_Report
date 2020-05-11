@@ -1,9 +1,41 @@
 const puppeteer = require('puppeteer');
+const csv = require('csv-parser');
+const fs = require('fs');
 
-const name = 'Naomi Speiss';
-const title = 'IAM Service Coordinator';
-const email = 'asdf@mail';
-const date = '03/21/20';
+const filename = process.argv[2];
+const name = process.argv[3];
+const title = process.argv[4];
+let email;
+if (process.argv.length < 6) {
+  console.log('dun have email');
+} else {
+  email = process.argv[5];
+  console.log(email);
+}
+
+let date = [];
+let num = 0;
+
+const readFile = () => {
+  return new Promise((resolve) => {
+    fs.createReadStream(filename)
+      .pipe(csv())
+      .on('data', async (row) => {
+        if (row['Date Worked *']) {
+          if (num == 0) {
+            num++;
+            return;
+          }
+          date.push(row['Date Worked *']);
+        } else {
+          return;
+        }
+
+        console.log('new line');
+      })
+      .on('finish', resolve);
+  });
+};
 
 (async () => {
   const browser = await puppeteer.launch({ headless: false });
