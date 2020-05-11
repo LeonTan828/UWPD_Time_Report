@@ -8,10 +8,10 @@ const name = process.argv[3];
 const title = process.argv[4];
 let email;
 if (process.argv.length < 6) {
-  console.log('dun have email');
+  console.log('No email provided');
+  email = '';
 } else {
   email = process.argv[5];
-  console.log(email);
 }
 
 // Variables
@@ -23,6 +23,7 @@ let otHours = [];
 let rateofOT = [];
 let notes = [];
 let num = 0;
+let completed = false;
 
 // Read CSV file
 const readFile = () => {
@@ -35,6 +36,8 @@ const readFile = () => {
           num++;
           return;
         }
+
+        // Building input arrays
 
         if (row['Date Worked *']) {
           date.push(row['Date Worked *']);
@@ -77,8 +80,6 @@ const readFile = () => {
         } else {
           notes.push('');
         }
-
-        console.log('new line');
       })
       .on('finish', resolve);
   });
@@ -94,9 +95,6 @@ const entryFunc = (newdate, loc, reghr, soh, othr, rtot, note) => {
         'https://app.smartsheet.com/b/form/5784f92c46a14794abc5eb68c420ba7e'
       );
 
-      // Entry starts here
-      console.log('Start entry');
-
       // Name
       await page.focus('[name="Kka8Wbd"]');
       await page.keyboard.type(name);
@@ -106,7 +104,7 @@ const entryFunc = (newdate, loc, reghr, soh, othr, rtot, note) => {
       await page.keyboard.type(title);
 
       // Organization
-      // Set to DoIT
+      // ATTN: Set to DoIT
       await page.click('[data-client-id="container_Organization"]');
       await page.click('[id="react-select-2-option-10"]');
 
@@ -124,11 +122,12 @@ const entryFunc = (newdate, loc, reghr, soh, othr, rtot, note) => {
         await page.click('[id="react-select-3-option-3"]');
       } else {
         // None of the input match
-        console.log('something went wrong');
-        console.log(
+        console.error('Something went wrong');
+        console.error(
           'Input for "location of work" is wrong: ' + loc + ' is not accepted'
         );
 
+        // Skipping this entry
         await browser.close();
         resolve('not done');
         return;
@@ -146,11 +145,12 @@ const entryFunc = (newdate, loc, reghr, soh, othr, rtot, note) => {
         await page.click('[id="react-select-4-option-2"]');
       } else {
         // None of the input match
-        console.log('something went wrong');
-        console.log(
+        console.error('Something went wrong');
+        console.error(
           'Input for "salaried or hourly" is wrong: ' + soh + ' is not accepted'
         );
 
+        // Skipping this entry
         await browser.close();
         resolve('not done');
         return;
@@ -174,11 +174,12 @@ const entryFunc = (newdate, loc, reghr, soh, othr, rtot, note) => {
         await page.click('[id="react-select-5-option-5"]');
       } else {
         // None of the input match
-        console.log('something went wrong');
-        console.log(
+        console.error('Something went wrong');
+        console.error(
           'Input for "rate of overtime" is wrong: ' + rtot + ' is not accepted'
         );
 
+        // Skipping this entry
         await browser.close();
         resolve('not done');
         return;
@@ -189,47 +190,40 @@ const entryFunc = (newdate, loc, reghr, soh, othr, rtot, note) => {
       await page.keyboard.type(note);
 
       // Submit a copy of response
-      await page.click('[name="EMAIL_RECEIPT_CHECKBOX"]');
-      await page.focus('[name="EMAIL_RECEIPT"]');
-      await page.keyboard.type(email);
+      if (email != '') {
+        await page.click('[name="EMAIL_RECEIPT_CHECKBOX"]');
+        await page.focus('[name="EMAIL_RECEIPT"]');
+        await page.keyboard.type(email);
+      }
 
-      // NOTE
-      // SUBMIT button
-
-      // await page.click('[data-client-id="form_submit_btn"]');
-
-      // try {
-      //   await page.waitFor('[data-client-id="confirmation_msg"]', {
-      //     timeout: 60000
-      //   });
-      //   await page.goto('https://www.google.com/');
-      // } catch (err) {
-      //   console.log('timed out');
-      // }
-
-      console.log('got here');
-      await browser.waitForTarget(() => false);
-      resolve('done here');
+      // Clicking submit button
+      await page.click('[data-client-id="form_submit_btn"]');
+      try {
+        await page.waitFor('[data-client-id="confirmation_msg"]', {
+          timeout: 60000
+        });
+        completed = true;
+      } catch (err) {
+        console.error('timed out');
+      }
 
       await browser.close();
+      resolve('done here');
     })();
   });
 };
 
 const mainFunc = async () => {
+  // Reading CSV file
   await readFile();
 
-  console.log('for loop here');
+  // Submitting form
   let length = date.length;
-  console.log(length);
-  console.log(date);
-  console.log(locations);
-  console.log(regHours);
-  console.log(salariedOrHourly);
-  console.log(otHours);
-  console.log(rateofOT);
-  console.log(notes);
+  console.log('Starting entry loop');
   for (let i = 0; i < length; i++) {
+    console.log('Entry ' + (i + 1));
+    completed = false;
+
     await entryFunc(
       date[i],
       locations[i],
@@ -239,8 +233,14 @@ const mainFunc = async () => {
       rateofOT[i],
       notes[i]
     );
-    console.log('end of loop here');
+
+    if (completed) {
+      console.log('Done!');
+    } else {
+      console.log('Did not enter');
+    }
   }
+  console.log('Loop is finished');
 };
 
 mainFunc();
