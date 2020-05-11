@@ -1,6 +1,6 @@
 # UWPD_Time_Report
 
-UWPD has requested UW employees to enter their Covid-19 time report through this [form](https://app.smartsheet.com/b/form/5784f92c46a14794abc5eb68c420ba7e). This script is to automate the form entry through a csv file, as many people has multiple entries to enter. This script is a command-line program
+UWPD has requested UW employees to enter their Covid-19 time report through this [form](https://app.smartsheet.com/b/form/5784f92c46a14794abc5eb68c420ba7e). This script is to automate the form entry through a csv file, as many people has multiple entries to enter. This script can be run through the command-line
 
 ## Getting Started
 
@@ -41,3 +41,8 @@ An example would be
 ```
 node submitForm.js sample_John_doe.csv 'John Doe' 'Developer' jdoe@email.com
 ```
+
+## Notes
+
+- This form is built for DoIT employees, so it will always select DoIT for the Organization field. If you wish to use this script for employees outside of DoIT, please let me know.
+- After a couple of submissions, the form may detect automated queries and start implementing CAPTCHA. The headless option is turned off so that user can repond to the CAPTCHA. You will have 2 minutes to respond to the CAPTCHA before the script times out and move on to the next submission
