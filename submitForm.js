@@ -118,7 +118,7 @@ const entryFunc = (newdate, loc, reghr, soh, othr, rtot, note) => {
         await page.click('[id="react-select-3-option-1"]');
       } else if (loc == 'on campus') {
         await page.click('[id="react-select-3-option-2"]');
-      } else if (loc == 'state EOC on-site') {
+      } else if (loc == 'state EOC on-site' || loc == 'on-site') {
         await page.click('[id="react-select-3-option-3"]');
       } else {
         // None of the input match
